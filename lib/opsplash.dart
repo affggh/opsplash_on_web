@@ -227,6 +227,12 @@ Future<Uint8List> convertToBMP(img.Image imgimg) async {
     return false;
   }
 
+  String? getMetadataNameByIndex(int index) {
+    if (index > imgNumber! || index < 0) return null;
+
+    return utf8.decode(dataInfo![index].name.where((i) => i!=0).toList());
+  }
+
   Uint8List? generateNewSplashImage() {
     if (splashMagic == null) return null;
     if (dataInfo == null) return null;

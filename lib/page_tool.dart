@@ -226,6 +226,13 @@ class _PageToolBodyState extends State<PageToolBody> {
                                               }
                                             }),
                                         actions: [
+                                          Button(child: const Text("Save"), onPressed: () {
+                                            var index = selectedItem!.value as int;
+                                            var data = splashImage!.getImageDataByIndex(index);
+                                            var name = splashImage!.getMetadataNameByIndex(index)!;
+
+                                            FileSaver.instance.saveFile(name: "$name.bmp", bytes: data);
+                                          }),
                                           Button(
                                               child: const Text("OK"),
                                               onPressed: () {
@@ -327,16 +334,24 @@ class _PageToolBodyState extends State<PageToolBody> {
                     ),
                     Expanded(
                       child: FilledButton(
-                        onPressed: (splashImage != null) ? () {
-                          var splashData = splashImage!.generateNewSplashImage();
+                        onPressed: (splashImage != null)
+                            ? () {
+                                var splashData =
+                                    splashImage!.generateNewSplashImage();
 
-                          if (splashData != null) {
-                            FileSaver.instance.saveFile(name: "new-splash.img", bytes: splashData);
-                          } else {
-                            displayInfoBar(context, builder: (context, close) => InfoBar(title: Text("Generated failed!"), severity: InfoBarSeverity.error,));
-                          }
-
-                        } : null,
+                                if (splashData != null) {
+                                  FileSaver.instance.saveFile(
+                                      name: "new-splash.img",
+                                      bytes: splashData);
+                                } else {
+                                  displayInfoBar(context,
+                                      builder: (context, close) => const InfoBar(
+                                            title: Text("Generated failed!"),
+                                            severity: InfoBarSeverity.error,
+                                          ));
+                                }
+                              }
+                            : null,
                         child: const Text("Download"),
                       ),
                     ),
