@@ -11,13 +11,15 @@ Program written by [affggh](https://github.com/affggh)
 Program written with flutter
 
 ## There are some awsome libraries on flutter
-[`fluent_ui`](https://bdlukaa.github.io/fluent_ui)    
-[`flutter_markdown`](https://pub.dev/packages/flutter_markdown)    
-[`splash image`](https://www.zcool.com.cn/work/ZNTU1Nzg3Mjg=.html?)    
-[`file_picker`]()    
-[`fltter_native_splash`]()    
-[`url_launcher`]()
+[fluent_ui](https://bdlukaa.github.io/fluent_ui)    
+[flutter_markdown](https://pub.dev/packages/flutter_markdown)    
+[splash image](https://www.zcool.com.cn/work/ZNTU1Nzg3Mjg=.html?)    
+[file_picker]()    
+[fltter_native_splash]()    
+[url_launcher]()
 
+## limit
+flutter seems not support isolate on web platform, so some method may stuck.
 """;
 
 class AboutPage extends StatelessWidget  {

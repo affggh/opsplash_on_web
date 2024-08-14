@@ -38,7 +38,7 @@ class _PageHomeState extends State<PageHome> {
           ],
           footerItems: <NavigationPaneItem>[
             PaneItem(
-                icon: const Icon(FluentIcons.info), body: const AboutPage())
+                icon: const Icon(FluentIcons.info), title: Text("About"), body: const AboutPage())
           ],
           onChanged: (select) {
             setState(() {
