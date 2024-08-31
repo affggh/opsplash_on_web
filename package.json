@@ -1,0 +1,21 @@
+{
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "@types/pako": "^2.0.3",
+    "webpack-cli": "^5.1.4"
+  },
+  "name": "opsplash_web",
+  "version": "1.0.0",
+  "main": "opsplash.js",
+  "dependencies": {
+    "pako": "^2.1.0",
+    "undici-types": "^6.19.8"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

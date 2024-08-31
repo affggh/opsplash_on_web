@@ -1,0 +1,9 @@
+src/*.js
+bundle.js
+
+dist/*
+node_modules/*
+
+.vscode
+
+splash.img

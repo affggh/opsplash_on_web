@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>opsplash on web</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            /* 垂直排列子元素 */
+            height: 100vh;
+            /* 让容器占满视窗高度 */
+            /* 针对 Firefox */
+            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+            /* 滚动条的滑块和轨道的颜色 */
+            scrollbar-width: thin;
+            /* 设置滚动条宽度 */
+        }
+
+        .appbar {
+            display: flex;
+            justify-content: center;
+            /* 水平方向居中 */
+            align-items: center;
+            /* 垂直方向居中 */
+            background-color: #0f0f0f;
+            height: 50px;
+            box-shadow: 10px 10px 20px 5px rgba(0, 0, 0, 0.5);
+            font-size: larger;
+            /* 不可选中 */
+            user-select: none;
+            /* 别把我看扁了 */
+            flex-shrink: 0;
+        }
+
+        .fileinput {
+            display: flex;
+            justify-content: center;
+            /* 水平居中 */
+            align-items: center;
+            /* 垂直居中 */
+            padding: 10px;
+            /* 内部缩进 10px */
+            box-sizing: border-box;
+            /* 包含 padding 在内的盒子模型 */
+        }
+
+        .scrollable-table-container {
+            overflow: auto;
+            /* 允许滚动 */
+            margin: 0 auto;
+            /* 居中容器 */
+            flex-grow: 1;
+        }
+
+        table {
+            width: 100%;
+            /* 表格宽度自适应容器 */
+            border-collapse: collapse;
+            /* 消除表格内部间距 */
+        }
+
+        th,
+        td {
+            text-align: left;
+            /* 文本左对齐 */
+        }
+
+        .logarea {
+            display: flex;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin: 20px;
+            background-color: rgba(0, 0, 30, 0.15);
+            border-radius: 20px;
+            flex-direction: column;
+            margin-top: auto;
+            box-shadow:
+                -5px -5px 10px rgba(0, 0, 0, 0.1),
+                /* 左上角亮光 */
+                5px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        textarea {
+            background-color: transparent;
+            border: transparent;
+            /* 可选：边框颜色 */
+            resize: none;
+            /* 可选：禁止调整大小 */
+            border-radius: 20px;
+            box-shadow:
+                -5px -5px 10px rgba(255, 255, 255, 0.1),
+                /* 左上角亮光 */
+                5px 5px 10px rgba(0, 0, 0, 0.3);
+            /* 右下角阴影 */
+            color: rgba(255, 255, 255, 0.5);
+            font-size: smaller;
+        }
+
+        /* 滚动条透明 */
+        /* 针对 WebKit 浏览器 (Chrome, Safari) */
+        ::-webkit-scrollbar {
+            width: 12px;
+            /* 滚动条的宽度 */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+            /* 滚动条轨道背景设置为透明 */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.3);
+            /* 滚动条的滑块部分颜色 */
+            border-radius: 10px;
+            /* 滑块的圆角 */
+            border: 3px solid transparent;
+            /* 滑块的内边框 */
+        }
+
+        /* Card class 定义 */
+        .card {
+            background-color: #1f1f1f;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 阴影效果 */
+            padding: 20px;
+            margin: 20px;
+            max-width: 300px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Hover 状态下的阴影效果 */
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* 增强阴影效果 */
+        }
+
+        /* 卡片标题 */
+        .card-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #eee;
+        }
+
+        /* 卡片内容 */
+        .card-content {
+            font-size: 1em;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="appbar">
+        OPSLASH ON WEB
+    </div class="fileinput">
+    <div class="fileinput">
+        <input type="file" id="uploadButton" />
+        <button class="outline" id="test" onclick="testSplashImage()">TEST</button>
+        <div style="width: 10px;"></div>
+        <button class="contrast" id="download">Download</button>
+    </div>
+    <div class="scrollable-table-container">
+        <table id="splashTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Offset</th>
+                    <th>CompSize</th>
+                    <th>RealSize</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="logarea">
+        <div style="display: flex; flex-direction: row; gap: 10px; padding: 20px;">
+            <h4 style="flex-grow: 1;">Actions:</h4>
+            <button onclick="document.getElementById('about').show()">⭕💰</button>
+            <button class="secondary" id="preview">Preview</button>
+            <button class="outline" id="change">Change</button>
+            <button class="outline" onclick="document.getElementById('logout').value = null">Clear</button>
+        </div>
+        <textarea name="logout" id="logout" rows="4" readonly></textarea>
+    </div>
+    <script src="./bundle.js"></script>
+    <script>
+        // 获取textarea元素
+        const consoleOutput = document.getElementById('logout');
+
+        // 保留原始的console.log方法
+        const originalConsoleLog = console.log;
+
+        // 重写console.log方法
+        console.log = function (...args) {
+            // 将输出内容追加到textarea
+            args.forEach(arg => {
+                consoleOutput.value += arg + '\n';
+            });
+
+            // 自动滚动到最新内容
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+
+            // 调用原始的console.log方法
+            originalConsoleLog.apply(console, args);
+        };
+
+        console.log("opsplash writen by affggh");
+    </script>
+
+    <dialog id="imgdialog">
+        <div style="display: flex; flex-direction: column; padding: 10px;">
+            <div style="display: flex; flex-grow: 1;">
+                <img id="previewimg" src="" alt=""
+                    style="max-width: 80vh; max-height: 80vh; width: auto; height: auto;">
+            </div>
+            <div class="group" style="display: flex; flex-grow: 0; gap: 10px;">
+                <button class="secondary" onclick="{
+                    const src = document.getElementById('previewimg').src;
+                    const link = document.createElement('a');
+                    link.href = src;
+                    link.download = 'preview.bmp';
+                    link.click();
+                }">Save this bmp</button>
+                <button class="outline" onclick="document.getElementById('imgdialog').close()">OK</button>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="about">
+        <div>
+            <div class="card">
+                <h3 class="card-title">About</h3>
+                <p class="card-content">
+                    Written by Circle Cash TEAM<br/>
+                    main program and ui: affggh
+                </p>
+                <div style="display: flex; justify-content: flex-end;">
+                <button onclick="document.getElementById('about').close()">OK</button>
+            </div>
+            </div>
+        </div>
+    </dialog>
+</body>
+
+</html>
